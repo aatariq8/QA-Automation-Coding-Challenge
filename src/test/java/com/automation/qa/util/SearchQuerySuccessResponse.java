@@ -7,17 +7,18 @@ import java.util.ArrayList;
 
 public class SearchQuerySuccessResponse {
     @JsonProperty
-    private float total_count;
+    private int total_count;
     @JsonProperty
     private boolean incomplete_results;
     @JsonProperty
-    ArrayList< Object > items = new ArrayList < Object > ();
+    ArrayList<Object> items = new ArrayList<Object>();
 
-// Getter Methods
-public ArrayList<Object> getItems() {
-    return items;
-}
-    public float getTotal_count() {
+    // Getter Methods
+    public ArrayList<Object> getItems() {
+        return items;
+    }
+
+    public int getTotal_count() {
         return total_count;
     }
 
@@ -27,7 +28,7 @@ public ArrayList<Object> getItems() {
 
     // Setter Methods
 
-    public void setTotal_count(float total_count) {
+    public void setTotal_count(int total_count) {
         this.total_count = total_count;
     }
 

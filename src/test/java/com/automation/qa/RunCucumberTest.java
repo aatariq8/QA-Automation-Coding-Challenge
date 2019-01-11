@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-features = {"classpath:features/search-repositories.feature"}, glue = {"com.automation.qa.StepDefinitions"}, dryRun = false,format = { "pretty", "html:target/cucumber" })
+features = {"src/test/resources/features/"}, glue = {"com.automation.qa"}, dryRun = false,format = { "pretty", "html:target/cucumber" })
 public class RunCucumberTest {
 
 

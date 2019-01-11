@@ -21,14 +21,17 @@ public class StepDefinitions {
 
     static {
 
-        RestAssured.baseURI = System.getenv("url");
+        //if this grame work works in Jenkins the URL can be parametrized instead of hardcoding it.
+       // RestAssured.baseURI = System.getenv("url");
+         RestAssured.baseURI = "https://api.github.com";
+
     }
 
     private static String URL_PREFIX = "/search/repositories";
     private Response response;
 
 
-    @When("^User makes a search call for repositories to github with the parameters below")
+    @When("User makes a search call for repositories to github with the parameters below")
     public void userMakesASearchCallForRepositories(DataTable table) {
         List<SearchQueryParameters> searchQueryParameters = table.asList(SearchQueryParameters.class);
         for (SearchQueryParameters searchQueryParameter : searchQueryParameters) {
@@ -58,7 +61,7 @@ public class StepDefinitions {
 
     }
 
-    @Then("^verify a response code of (.*) is returned")
+    @Then("verify a response code of (.*) is returned")
     public void verifyAResponseCodeOfIsReturned(int resCode) {
 
         this.response = given().contentType("application/vnd.github.mercy-preview+json").basePath(URL_PREFIX).
@@ -70,12 +73,12 @@ public class StepDefinitions {
 
     }
 
-    @Then("^verify the item count,total count and incomplete result (.*) in the response json")
-    public void verifyTheItemCountAndTotalCount(boolean incomplete_items) {
+    @Then("verify the item count is (.*) and incomplete result (.*) in the response json")
+    public void verifyTheItemCountAndTotalCount(int count, boolean incomplete_items) {
         SearchQuerySuccessResponse searchQuerySuccessResponse = response.getBody().as(SearchQuerySuccessResponse.class);
         Assert.assertEquals(searchQuerySuccessResponse.getIncomplete_results(), incomplete_items);
         Assert.assertTrue(searchQuerySuccessResponse.getItems().size() != 0);
-        Assert.assertTrue((searchQuerySuccessResponse.getTotal_count() != 0));
+        Assert.assertEquals(count, searchQuerySuccessResponse.getTotal_count());
 
     }
 }
